@@ -3,9 +3,8 @@ import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-n
 import homeScreenLogo from '../homeScreen.png';
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    title: "sunwise"
-  };
+
+  static navigationOptions = { title: 'sunwise', header: null }; // hide header
 
   render() {
     const { navigate } = this.props.navigation;
@@ -24,7 +23,6 @@ class HomeScreen extends Component {
               of serotonin?
             </Text>
           </View>
-          <View style={styles.buttons}>
             <View style={styles.button}>
               <Button
                 color="white"
@@ -32,6 +30,7 @@ class HomeScreen extends Component {
                 onPress={() => navigate('Today')}
               />
             </View>
+          <View style={styles.space} />
             <View style={styles.button}>
               <Button
                 color="white"
@@ -39,7 +38,6 @@ class HomeScreen extends Component {
                 onPress={() => navigate('Stats')}
               />
             </View>
-          </View>
         </View>
       </View>
     );
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   logo: {
-    height: '36%',
+    height: '40%',
     width: '100%'
   },
   bottom: {
@@ -66,7 +64,7 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     width: 310,
-    height: 160,
+    height: 140,
     borderRadius: 5,
     borderWidth: 0.8,
     borderColor: '#636363',
@@ -75,17 +73,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-    marginTop: 40
+    marginTop: 30,
+    marginBottom: 30
   },
   text: {
     color: '#636363',
     fontFamily: 'Avenir',
     fontSize: 20,
     fontWeight: '700',
-    textAlign: 'center'
+    textAlign: 'center',
+    lineHeight: 25
   },
-  buttons: {
-    marginTop: 10
+  space: {
+    height: 10
   },
   button: {
     backgroundColor: '#5e82d7',
