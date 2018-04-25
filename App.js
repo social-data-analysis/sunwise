@@ -10,11 +10,11 @@ const App = StackNavigator({
   Home: { screen: HomeScreen },
   Stats: { screen: StatsScreen },
   Today: { screen: TodayScreen },
-  // Calendar: { screen: CalendarScreen },
-  // Info: { screen: InfoScreen },
+  Calendar: { screen: CalendarScreen },
+  Info: { screen: InfoScreen }
 },
   {
     headerMode: 'screen'
-  });
+});
 
 export default App;

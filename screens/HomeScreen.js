@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { Button } from 'react-native-elements';
+import RectangleText from '../RectangleText';
 import homeScreenLogo from '../homeScreen.png';
 
 class HomeScreen extends Component {
@@ -15,17 +17,16 @@ class HomeScreen extends Component {
           source={homeScreenLogo}
          />
         <View style={styles.bottom}>
-          <View style={styles.rectangle}>
-            <Text style={styles.text}>
-              Did you know that sunlight
+          <RectangleText text="Did you know that sunlight
               cues special areas in the retina,
               which triggers the release
-              of serotonin?
-            </Text>
-          </View>
-            <View style={styles.button}>
+              of serotonin?"/>
+          <View style={styles.space} />
+          <View style={styles.buttons}>
+          <View style={styles.button}>
               <Button
-                color="white"
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
                 title="Start sunbathing"
                 onPress={() => navigate('Today')}
               />
@@ -33,11 +34,13 @@ class HomeScreen extends Component {
           <View style={styles.space} />
             <View style={styles.button}>
               <Button
-                color="white"
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
                 title="Check statistics"
                 onPress={() => navigate('Stats')}
               />
             </View>
+          </View>
         </View>
       </View>
     );
@@ -53,18 +56,16 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   logo: {
-    height: '40%',
+    flex: 1.1,
     width: '100%'
   },
   bottom: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
+    flex: 2,
     alignItems: 'center'
   },
   rectangle: {
+    flex: 1.4,
     width: 310,
-    height: 140,
     borderRadius: 5,
     borderWidth: 0.8,
     borderColor: '#636363',
@@ -73,8 +74,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-    marginTop: 30,
-    marginBottom: 30
+    marginTop: 50,
+    marginBottom: 20
   },
   text: {
     color: '#636363',
@@ -85,16 +86,24 @@ const styles = StyleSheet.create({
     lineHeight: 25
   },
   space: {
-    height: 10
+    height: 30
+  },
+  buttons: {
+    flex: 2
   },
   button: {
     backgroundColor: '#5e82d7',
     width: 238,
-    height: 46,
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 22,
-    marginTop: 20
+    height: 50,
+    borderRadius: 30,
+    alignItems: 'center'
+  },
+  buttonText: {
+    color: '#fff',
+    fontFamily: 'Avenir',
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center'
   }
 });
 
