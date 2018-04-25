@@ -14,6 +14,9 @@ const App = StackNavigator({
   Info: { screen: InfoScreen }
 },
   {
+    initialRouteName: 'Today'
+  },
+  {
     headerMode: 'screen'
 });
 

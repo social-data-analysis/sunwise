@@ -20,22 +20,23 @@ class HomeScreen extends Component {
           <RectangleText text="Did you know that sunlight
               cues special areas in the retina,
               which triggers the release
-              of serotonin?"/>
+              of serotonin?
+              "/>
           <View style={styles.space} />
           <View style={styles.buttons}>
           <View style={styles.button}>
-              <Button
-                buttonStyle={styles.button}
-                titleStyle={styles.buttonText}
-                title="Start sunbathing"
-                onPress={() => navigate('Today')}
-              />
+            <Button
+              buttonStyle={styles.button}
+              textStyle={styles.buttonText}
+              title="Start sunbathing"
+              onPress={() => navigate('Today')}
+            />
             </View>
           <View style={styles.space} />
             <View style={styles.button}>
               <Button
                 buttonStyle={styles.button}
-                titleStyle={styles.buttonText}
+                textStyle={styles.buttonText}
                 title="Check statistics"
                 onPress={() => navigate('Stats')}
               />
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Avenir',
     fontSize: 20,
-    fontWeight: '700',
     textAlign: 'center'
   }
 });
