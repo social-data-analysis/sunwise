@@ -1,11 +1,12 @@
 import React from 'react';
 import RectangleText from '../RectangleText';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { MessageBar, MessageBarManager } from 'react-native-message-bar';
+import Modal from 'react-native-modal';
+import AnimateNumber from 'react-native-countup'
 
 export default class TodayScreen extends React.Component {
 
@@ -13,23 +14,57 @@ export default class TodayScreen extends React.Component {
 
   state = {
     fill: 70,
-    uvIndex: 7
+    uvIndex: 7,
+    isModalVisible: false,
+    timer: 0,
+    increaseUVIndex: false
   };
 
-  componentDidMount() {
-    MessageBarManager.registerMessageBar(this.refs.alert);
-  }
+  toggleModal = () =>
+    this.setState({ isModalVisible: true });
 
-  componentWillUnmount() {
-    MessageBarManager.unregisterMessageBar();
+  onPress = () => {
+    this.setState({ isModalVisible: false });
+    setTimeout(() => {
+      this.props.navigation.navigate('Info')
+    }, 2000);
+  };
+
+  renderButton = (text) => (
+    <TouchableOpacity onPress={this.onPress}>
+      <View style={styles.warningButton}>
+        <Text style={styles.buttonText}>{text}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  renderModalContent = () => (
+    <Text style={styles.modalContent}>
+      <Text style={styles.modalContent}>
+        UV Index increased from 7 to 8!
+        Don't forget to put on sunscreen!
+      </Text>
+      {this.renderButton('Close', () => this.setState({ isModalVisible: false }))}
+    </Text>
+  );
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        uvIndex: 8,
+        fill: 80,
+        increaseUVIndex: true
+      });
+      setTimeout(() => {
+        this.toggleModal();
+      }, 2000);
+    }, 3000);
   }
 
   render() {
     const { navigate } = this.props.navigation;
-
     return (
       <View style={styles.container}>
-        <MessageBar ref="alert" />
         <Header title="Current UV Index" navigate={navigate} />
         <View style={styles.content}>
           <View style={styles.firstHalf}>
@@ -46,7 +81,17 @@ export default class TodayScreen extends React.Component {
             </AnimatedCircularProgress>
             <View style={styles.space}/>
             <Text style={styles.centeredText}>{this.state.uvIndex}</Text>
-          <Text style={styles.text}>You’ve been sunbathing from 14:25</Text>
+          <View>
+            <Text>
+              <Text style={styles.text}>
+                You’ve been sunbathing from
+              </Text>
+              <Text style={styles.text}> </Text>
+              <Text style={styles.timer}>
+                14:28
+              </Text>
+            </Text>
+          </View>
           </View>
           <View style={styles.secondHalf}>
             <RectangleText text="Currently UV index is high.
@@ -58,21 +103,20 @@ export default class TodayScreen extends React.Component {
                 buttonStyle={styles.button}
                 textStyle={styles.buttonText}
                 title="What is UV Index?"
-                onPress={() => {
-                  MessageBarManager.showAlert({
-                    title: 'UV Index increased from 7 to 8. Don\'t forget to put on sunscreen with SPF 30!',
-                    message: 'UV Index increased from 7 to 8. Don\'t forget to put on sunscreen with SPF 30!',
-                    alertType: 'warning',
-                    titleNumberOfLines: 4,
-                    messageNumberOfLines: 4
-                  });
-                  // navigate('Info');
-                }}
               />
             </View>
             </View>
         </View>
         <Footer navigate={navigate} />
+        <Modal isVisible={this.state.isModalVisible}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalContentText}>
+              UV Index increased from 7 to 8!
+              Don't forget to put on sunscreen!
+            </Text>
+            {this.renderButton('OK')}
+          </View>
+        </Modal>
       </View>
     )
   }
@@ -84,52 +128,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
-  header: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1,
-    marginTop: 28
-  },
   content: {
     flex: 10,
     backgroundColor: 'white',
     alignItems: 'center'
-  },
-  headerContent: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    color: '#565656',
-    fontFamily: 'Avenir',
-    fontSize: 25,
-    fontWeight: '600',
-    justifyContent: 'center',
-    textAlign: 'center',
-    flex: 2
-  },
-  backIcon: {
-    flex: 1,
-    marginLeft: 24,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
-  },
-  circle: {
-    width: 210,
-    height: 210,
-    borderRadius: 210/2,
-    borderWidth: 26,
-    borderColor: '#e86e57',
-    borderStyle: 'solid',
-  },
-  pieChart: {
-    marginTop: 10,
-    zIndex: 1,
-    flex: 15
   },
   centeredText: {
     color: '#e86e57',
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     position: 'absolute',
     top: 70,
-    left: 95,
+    left: 92,
     zIndex: 2
   },
   text: {
@@ -146,6 +148,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
     fontSize: 15,
     flex: 1.4
+  },
+  timer: {
+    color: '#565656',
+    fontFamily: 'Avenir',
+    fontSize: 15,
+    fontWeight: '700'
   },
   space: {
     flex: 1.6
@@ -155,7 +163,17 @@ const styles = StyleSheet.create({
     width: 238,
     height: 50,
     borderRadius: 30,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  warningButton: {
+    backgroundColor: '#e86e57',
+    width: 100,
+    height: 50,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20
   },
   buttonText: {
     color: '#fff',
@@ -172,5 +190,21 @@ const styles = StyleSheet.create({
   secondHalf: {
     flex: 5,
     alignItems: 'center'
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)'
+  },
+  modalContentText: {
+    color: '#565656',
+    fontFamily: 'Avenir',
+    fontSize: 18,
+    fontWeight: '600',
+    lineHeight: 25,
+    textAlign: 'center'
   }
 });

@@ -23,9 +23,12 @@
     "react": "16.3.0",
     "react-native": "~0.54.1",
     "react-native-circular-progress": "^0.2.0",
+    "react-native-countup": "0.0.2",
     "react-native-dropdownalert": "^3.4.0",
     "react-native-elements": "^0.19.1",
     "react-native-message-bar": "^2.0.10",
+    "react-native-modal": "^5.4.0",
+    "react-native-modal-datetime-picker": "^5.1.0",
     "react-native-pie-chart": "^1.0.13",
     "react-native-svg-charts": "^5.0.0",
     "react-navigation": "^1.5.11"

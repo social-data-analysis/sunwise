@@ -34,7 +34,7 @@ export default class Footer extends React.Component {
                this.setState({
                  sunbathingStarted: false
                });
-               this.props.navigate('Home');
+               this.props.navigate('Home', {stopTimer: true});
              }
            }
            />

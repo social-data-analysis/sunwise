@@ -3,25 +3,25 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import RectangleText from '../RectangleText';
 import homeScreenLogo from '../homeScreen.png';
+import { sunbathingFacts } from '../data/sunbathingFacts';
 
 class HomeScreen extends Component {
 
   static navigationOptions = { title: 'sunwise', header: null }; // hide header
 
+  randomFact = sunbathingFacts[Math.floor(Math.random() * sunbathingFacts.length)];
+
   render() {
     const { navigate } = this.props.navigation;
-    return (
+     return (
       <View style={styles.container}>
         <Image
           style={styles.logo}
           source={homeScreenLogo}
          />
         <View style={styles.bottom}>
-          <RectangleText text="Did you know that sunlight
-              cues special areas in the retina,
-              which triggers the release
-              of serotonin?
-              "/>
+          <View style={styles.smallSpace} />
+          <RectangleText text={this.randomFact}/>
           <View style={styles.space} />
           <View style={styles.buttons}>
           <View style={styles.button}>
@@ -81,13 +81,16 @@ const styles = StyleSheet.create({
   text: {
     color: '#636363',
     fontFamily: 'Avenir',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
     lineHeight: 25
   },
   space: {
     height: 30
+  },
+  smallSpace: {
+    height: 15
   },
   buttons: {
     flex: 2
